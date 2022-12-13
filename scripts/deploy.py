@@ -24,7 +24,6 @@ def deploy_fund_me():
         {"from": account}, 
         publish_source=publish_source
     )
-    print("Fund me : ", fund_me)
 
 
 def main():
