@@ -10,3 +10,7 @@ compiler:
     remappings:
     # remapping in the sense tht we tell the coompiler that when compiling, if you see '@chainlink' change it to 'whatever'
       - '@chainlink=smartcontractkit/chainlink-brownie-contracts@1.2.0'
+
+wallets:
+  private_key: ${PRIVATE_KEY}
+  address: ${ADDRESS}

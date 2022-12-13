@@ -7,7 +7,10 @@ from .extras import get_account
 
 def deploy_fund_me():
     account = get_account()
-    pass
+    
+    #deploy contract
+    fund_me = FundMe.deploy({"from" : account}, publish_source=True)
+    print("Fund me : ", fund_me)
 
 
 def main():
