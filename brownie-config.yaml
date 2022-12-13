@@ -1,0 +1,12 @@
+dotenv: .env
+dependencies: 
+# chain link connection and import
+  # - <organization/repo>@<version>
+  - smartcontractkit/chainlink-brownie-contracts@1.2.0
+
+#compiler setting for solidity
+compiler:
+  solc:
+    remappings:
+    # remapping in the sense tht we tell the coompiler that when compiling, if you see '@chainlink' change it to 'whatever'
+      - '@chainlink=smartcontractkit/chainlink-brownie-contracts@1.2.0'
