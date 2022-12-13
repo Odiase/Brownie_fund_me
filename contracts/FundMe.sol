@@ -17,6 +17,8 @@ contract FundMe {
     // safe math library check uint256 for integer overflows
     using SafeMathChainlink for uint256;
 
+    AggregatorV3Interface public price_feed;    
+
     //mapping to store which address depositeded how much ETH
     mapping(address => uint256) public addressToAmountFunded;
     // array of addresses who deposited
@@ -26,8 +28,9 @@ contract FundMe {
 
     // the first person to deploy the contract is
     // the owner
-    constructor() public {
+    constructor(address _price_feed) public {
         owner = msg.sender;
+        price_feed = AggregatorV3Interface(_price_feed);
     }
 
     function fund() public payable {
@@ -45,17 +48,11 @@ contract FundMe {
 
     //function to get the version of the chainlink pricefeed
     function getVersion() public view returns (uint256) {
-        AggregatorV3Interface priceFeed = AggregatorV3Interface(
-            0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e
-        );
-        return priceFeed.version();
+        return price_feed.version();
     }
 
     function getPrice() public view returns (uint256) {
-        AggregatorV3Interface priceFeed = AggregatorV3Interface(
-            0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e
-        );
-        (, int256 answer, , , ) = priceFeed.latestRoundData();
+        (, int256 answer, , , ) = price_feed.latestRoundData();
         // ETH/USD rate in 18 digit
         return uint256(answer * 10000000000);
     }
