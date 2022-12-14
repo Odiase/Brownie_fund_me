@@ -1,25 +1,15 @@
 # third packages import
 from brownie import accounts, config, FundMe, MockV3Aggregator, network
+from web3 import Web3
 
 # local imports
-from .extras import get_account
+from .extras import get_account, deploy_mocks
 
 
 def deploy_fund_me():
     account = get_account()
     publish_source = config['networks'][network.show_active()].get('verify')
-    
-    # if we are on a persistent network(goerli...etc), use associated price_feed address,
-    #  else use mocks
-    if network.show_active() != "development":
-        price_feed_address = config['networks'][network.show_active(
-        )]['eth_usd_price_feed']
-    else:
-        mock_aggregator = MockV3Aggregator.deploy(
-            18, 2000000000000000000000, 
-            {"from": account}
-        )
-        price_feed_address = mock_aggregator.address
+    price_feed_address = deploy_mocks()
 
     # deploying fund me contract
     fund_me = FundMe.deploy(
