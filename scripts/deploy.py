@@ -3,13 +3,13 @@ from brownie import accounts, config, FundMe, MockV3Aggregator, network
 from web3 import Web3
 
 # local imports
-from .extras import get_account, deploy_mocks, LOCAL_BLOCKCHIAN_ENVIRONMENTS
+from .extras import get_account, deploy_mocks, LOCAL_BLOCKCHAIN_ENVIRONMENTS
 
 
 def deploy_fund_me():
     account = get_account()
 
-    if network.show_active() not in LOCAL_BLOCKCHIAN_ENVIRONMENTS:
+    if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
         price_feed_address = config['networks'][network.show_active(
         )]['eth_usd_price_feed']
         publish_source = config['networks'][network.show_active()].get('verify')
