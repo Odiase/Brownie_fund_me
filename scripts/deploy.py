@@ -14,16 +14,17 @@ def deploy_fund_me():
         )]['eth_usd_price_feed']
         publish_source = config['networks'][network.show_active()].get('verify')
     else:
-        price_feed_address = deploy_mocks()
+        print("Deploying Mocks")
+        price_feed_address = deploy_mocks(account)
         publish_source = False
 
     # deploying fund me contract
     fund_me = FundMe.deploy(
         price_feed_address,
-        {"from": account},
+        {"from" : account},
         publish_source=publish_source
     )
-
+    return fund_me
 
 def main():
     deploy_fund_me()

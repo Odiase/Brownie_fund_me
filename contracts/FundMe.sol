@@ -33,6 +33,10 @@ contract FundMe {
         price_feed = AggregatorV3Interface(_price_feed);
     }
 
+    function check_price_feed() public view returns (AggregatorV3Interface) {
+        return price_feed;
+    }
+
     function fund() public payable {
         // 18 digit number to be compared with donated amount
         uint256 minimumUSD = 50 * 10**18;
@@ -80,7 +84,7 @@ contract FundMe {
     //modifier: https://medium.com/coinmonks/solidity-tutorial-all-about-modifiers-a86cf81c14cb
     modifier onlyOwner() {
         //is the message sender owner of the contract?
-        require(msg.sender == owner);
+        require(msg.sender == owner, "Only Contract owners are allowed to Withdraw!");
         _;
     }
 

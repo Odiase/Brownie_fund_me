@@ -16,8 +16,7 @@ def get_account():
     return accounts.add(config['wallets']['private_key'])
 
 
-def deploy_mocks():
-    account = get_account()
+def deploy_mocks(account):
     # if we are on a persistent network(goerli...etc), use associated price_feed address,
     #  else use mocks
     if len(MockV3Aggregator) <= 0:
@@ -25,7 +24,8 @@ def deploy_mocks():
             DECIMALS, Web3.toWei(STARTING_PRICE, 'ether'), 
             {"from": account}
         )
-        
-    price_feed_address = MockV3Aggregator[-1].address
+        price_feed_address = mock_aggregator.address
+    else:
+        price_feed_address = MockV3Aggregator[-1].address
 
     return price_feed_address
